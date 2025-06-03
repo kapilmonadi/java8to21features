@@ -1,4 +1,4 @@
-package com.kapil;
+package com.kapil.java17;
 
 /**
  * This class showcases examples of performing the instance of test without Pattern Matching
