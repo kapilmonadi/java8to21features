@@ -2,9 +2,9 @@ package com.kapil.concurrency;
 
 public class SampleThreadWithLambda {
     public static void main(String[] args) {
-        System.out.println("Executing thread : " + Thread.currentThread().getName());
+        System.out.println("[" + Thread.currentThread().getName() + "] Executing thread : " + Thread.currentThread().getName());
         Thread newThread = new Thread(() -> {
-            System.out.println("Executing thread : " + Thread.currentThread().getName());
+            System.out.println("[" + Thread.currentThread().getName() + "] Executing thread : " + Thread.currentThread().getName());
         });
         newThread.start();
     }

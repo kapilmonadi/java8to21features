@@ -10,9 +10,9 @@ public class SimpleThread {
 
     private static void createSimpleThread() {
         Thread thread = new Thread(() -> {
-            System.out.println(" I'm " + Thread.currentThread().getName());
-            System.out.println(" I simply execute code. I do not return anything ");
-            System.out.println(" I'm a Runnable");
+            System.out.println("[" + Thread.currentThread().getName() + "]  I'm " + Thread.currentThread().getName());
+            System.out.println("[" + Thread.currentThread().getName() + "]  I simply execute code. I do not return anything ");
+            System.out.println("[" + Thread.currentThread().getName() + "]  I'm a Runnable");
             printCurrentThreadName();
         });
         thread.setName("A simple thread");
@@ -21,6 +21,6 @@ public class SimpleThread {
 
 
     private static void printCurrentThreadName() {
-        System.out.println("The current thread name is " + Thread.currentThread().getName());
+        System.out.println("[" + Thread.currentThread().getName() + "] The current thread name is " + Thread.currentThread().getName());
     }
 }
