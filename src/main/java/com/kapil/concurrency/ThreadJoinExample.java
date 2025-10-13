@@ -37,6 +37,7 @@ public class ThreadJoinExample {
             System.out.println("[" + Thread.currentThread().getName() + "] I'm Thread 2.");
             System.out.println("[" + Thread.currentThread().getName() + "] I don';t have anything to do " +
                     "but I need to wait for my good friend Thread 1 to complete, " +
+                    "I know it needs a small nap " +
                     "so I'll wait until Thread 1 is done");
             try {
                 thread1.join();
