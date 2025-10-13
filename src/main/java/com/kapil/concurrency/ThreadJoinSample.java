@@ -2,7 +2,7 @@ package com.kapil.concurrency;
 
 import java.time.Duration;
 
-public class ThreadJoinExample {
+public class ThreadJoinSample {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("[" + Thread.currentThread().getName() + "] Below demonstrates an example of join() in Thread class");

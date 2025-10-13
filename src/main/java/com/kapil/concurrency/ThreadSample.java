@@ -1,6 +1,6 @@
 package com.kapil.concurrency;
 
-public class SimpleThread {
+public class ThreadSample {
     public static void main(String[] args) throws InterruptedException {
         // Print the currently executing Thread's name
         printCurrentThreadName();

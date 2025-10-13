@@ -1,6 +1,6 @@
 package com.kapil.concurrency;
 
-public class SampleThreadWithRunnable implements Runnable {
+public class ThreadWithRunnableSample implements Runnable {
 
     @Override
     public void run() {
@@ -9,8 +9,8 @@ public class SampleThreadWithRunnable implements Runnable {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("[" + Thread.currentThread().getName() + "] Executing thread : " + Thread.currentThread().getName());
-        SampleThreadWithRunnable sampleThreadWithRunnable = new SampleThreadWithRunnable();
-        Thread newThread = new Thread(sampleThreadWithRunnable);
+        ThreadWithRunnableSample threadWithRunnableSample = new ThreadWithRunnableSample();
+        Thread newThread = new Thread(threadWithRunnableSample);
         newThread.start();
         Thread.sleep(2000);
     }
