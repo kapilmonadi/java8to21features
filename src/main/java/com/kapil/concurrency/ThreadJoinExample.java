@@ -4,9 +4,16 @@ import java.time.Duration;
 
 public class ThreadJoinExample {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.out.println("Below demonstrates an example of join() in Thread class");
         System.out.println("I'm the main thread");
+
+        // We will first set the isDaemon to false (which is the default behavior
+        // of new threads then we will witness the behavior once the daemon flag is set to true
+        performChildThreadExecutions(false);
+    }
+
+    private static void performChildThreadExecutions(boolean isDaemon) {
 
         Thread thread1 = new Thread(() -> {
             System.out.println("I'm Thread 1.");
@@ -31,6 +38,9 @@ public class ThreadJoinExample {
                 throw new RuntimeException(e);
             }
         });
+
+        thread1.setDaemon(isDaemon);
+        thread2.setDaemon(isDaemon);
 
         thread1.start();
         thread2.start();
