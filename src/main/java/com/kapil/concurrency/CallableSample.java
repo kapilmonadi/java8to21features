@@ -18,9 +18,11 @@ public class CallableSample {
         // that will return an Employee once it is executed
         try (ExecutorService executorService = Executors.newSingleThreadExecutor()) {
             Future<Employee> future = executorService.submit(callable);
+            // this is a blocking call so the next line ain't executed, till the callable returns the value
             System.out.println(future.get());
 
             Future<Employee> futureForCallableWithSleep = executorService.submit(callableWithSleep);
+            // this is a blocking call so the next line ain't executed, till the callable returns the value
             System.out.println(futureForCallableWithSleep.get());
         }
         Thread.sleep(Duration.ofSeconds(2));
