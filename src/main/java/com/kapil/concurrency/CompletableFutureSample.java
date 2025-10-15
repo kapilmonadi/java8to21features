@@ -9,7 +9,14 @@ public class CompletableFutureSample {
 
     private static String productId = "ABC123";
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+
+        System.out.println("About to run an async task, sending for execution");
+        CompletableFuture<Void> asyncTaskCF = runAsyncTask();
+        // Blocking call similar ot Future.get()
+        // if below line is commented then main thread will continue executing without being blocked
+        asyncTaskCF.get();
+        System.out.println("Async task completed");
 
         var completableFutureProductDetails = CompletableFuture.supplyAsync(() -> {
             try {
@@ -54,5 +61,17 @@ public class CompletableFutureSample {
     }
 
     private static record Product(String productId, Double productPrice, String productDescription) {
+    }
+
+
+    private static CompletableFuture<Void> runAsyncTask(){
+        return CompletableFuture.runAsync(() -> {
+            try {
+                Thread.sleep(Duration.ofSeconds(1));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("Task completed !");
+        });
     }
 }
