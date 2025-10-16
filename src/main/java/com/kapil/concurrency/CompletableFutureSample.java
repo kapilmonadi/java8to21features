@@ -22,7 +22,14 @@ public class CompletableFutureSample {
 
         // print the value received from the CF, should return the string "No description available"
         // this is a non blocking call so the main thread will continue its execution
+        // thenAccept receives the value returned by the CompletableFuture and prints it
         completableFutureForDescription.thenAccept(System.out::println);
+
+        // thenRun does not receive the value returned by the CompletableFuture
+        // it simpy prints the instruction specified as part of the Runnable
+        completableFutureForDescription.thenRun(()-> {
+            System.out.println("The completableFutureForDescription task got completed successfully");
+        });
 
         System.out.println("Executing after the call to get the description of the Product");
 
