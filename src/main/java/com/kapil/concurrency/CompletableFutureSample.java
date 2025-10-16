@@ -91,7 +91,7 @@ public class CompletableFutureSample {
             // if the service does not return back in stipulated time return a default description
             try {
                 Thread.sleep(Duration.ofSeconds(5));
-                // simulating that the service call did not return and returning default value after 2 mins
+                // simulating that the service call did not return as anticipated and returning default value after 2 mins
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
