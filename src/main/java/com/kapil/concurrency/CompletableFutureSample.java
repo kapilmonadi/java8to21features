@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class CompletableFutureSample {
 
@@ -17,6 +19,9 @@ public class CompletableFutureSample {
         // if below line is commented then main thread will continue executing without being blocked
         asyncTaskCF.get();
         System.out.println("Async task completed");
+
+        // Completable future example with custom executor
+        completableFutureWithCustomExecutor();
 
         var completableFutureForDescription = getProductDescriptionWithCompleteCompletableFutureTask();
 
@@ -114,5 +119,20 @@ public class CompletableFutureSample {
             stringCompletableFuture.complete("No description available");
         });
         return stringCompletableFuture;
+    }
+
+    private static void completableFutureWithCustomExecutor(){
+        Executor executor = Executors.newFixedThreadPool(5);
+        CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(() -> {
+            System.out.println("Executing in aCF with a custom Thread Pool Executor");
+            try {
+                Thread.sleep(Duration.ofSeconds(2));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            finally {
+                System.out.println("Done executing the Completable future with a custom thread pool");
+            }
+        }, executor);
     }
 }
