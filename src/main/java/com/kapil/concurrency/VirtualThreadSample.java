@@ -1,11 +1,13 @@
 package com.kapil.concurrency;
 
 import java.time.Duration;
+import java.util.concurrent.ThreadFactory;
 
 public class VirtualThreadSample {
     public static void main(String[] args) throws InterruptedException {
         runPlatformThread();
         runVirtualThread();
+        runVirtualThreadUsingFactory();
         Thread.sleep(Duration.ofSeconds(2));
     }
 
@@ -17,9 +19,16 @@ public class VirtualThreadSample {
     }
 
     private static void runVirtualThread() {
-        var platformThread = Thread.ofVirtual().unstarted(() -> {
+        var virtualThread = Thread.ofVirtual().unstarted(() -> {
             System.out.println("I'm bering executed by a Virtual Thread");
         });
-        platformThread.start();
+        virtualThread.start();
+    }
+
+    private static void runVirtualThreadUsingFactory() {
+        ThreadFactory threadFactory = Thread.ofVirtual().factory();
+        threadFactory.newThread(() -> {
+            System.out.println("I'm running in a virtual thread created by the Virtual Thread factory.");
+        }).start();
     }
 }
