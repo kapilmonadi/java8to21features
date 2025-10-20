@@ -29,15 +29,22 @@ public class ExecutorServiceSample {
     }
 
     private static void runMultipleThreadExecutor() {
-        try (var executorService = Executors.newFixedThreadPool(5)) {
+        int threadCount = 2;
+        try (var executorService = Executors.newFixedThreadPool(threadCount)) {
             executorService.submit(() -> {
                 System.out.println("I'm task 1");
-                System.out.println("I'm running in a thread pool executor of 5 threads started by the Executor Service");
+                System.out.println("I'm running in a thread pool executor of 2 threads started by the Executor Service");
                 System.out.println("Thread name is : " + Thread.currentThread().getName());
             });
             executorService.submit(() -> {
                 System.out.println("I'm task 2");
-                System.out.println("I'm running in a thread pool executor of 5 threads started by the Executor Service");
+                System.out.println("I'm running in a thread pool executor of 2 threads started by the Executor Service");
+                System.out.println("Thread name is : " + Thread.currentThread().getName());
+            });
+
+            executorService.submit(() -> {
+                System.out.println("I'm task 3");
+                System.out.println("I'm running in a thread pool executor of 2 threads started by the Executor Service");
                 System.out.println("Thread name is : " + Thread.currentThread().getName());
             });
         }
