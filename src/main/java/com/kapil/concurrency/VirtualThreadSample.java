@@ -16,6 +16,10 @@ public class VirtualThreadSample {
             System.out.println("I'm bering executed by a Platform Thread");
         });
         platformThread.start();
+
+        Thread.ofPlatform().start(() -> {
+            System.out.println("Running a platform thread created via the Thread.Builder");
+        });
     }
 
     private static void runVirtualThread() {
@@ -23,6 +27,10 @@ public class VirtualThreadSample {
             System.out.println("I'm bering executed by a Virtual Thread");
         });
         virtualThread.start();
+
+        Thread.ofVirtual().start(() -> {
+            System.out.println("Running a virtual thread created via the Thread.Builder");
+        });
     }
 
     private static void runVirtualThreadUsingFactory() {
