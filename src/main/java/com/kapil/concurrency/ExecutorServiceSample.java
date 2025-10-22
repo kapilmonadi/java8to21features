@@ -1,6 +1,7 @@
 package com.kapil.concurrency;
 
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ExecutorServiceSample {
     public static void main(String[] args) {
@@ -14,6 +15,12 @@ public class ExecutorServiceSample {
 
         // run multiple threads executor
         runMultipleThreadExecutor();
+
+        // run scheduled thread executor, this will execute after 2 seconds
+        runOnceScheduledThreadExecutor();
+
+        // run a task that ius executed at regular intervals
+        runFixedRateScheduledTaskExecutor();
     }
 
     private static void runSingleThreadExecutor() {
@@ -51,5 +58,19 @@ public class ExecutorServiceSample {
         finally{
             System.out.println("Done using the Executor Service");
         }
+    }
+
+    private static void runOnceScheduledThreadExecutor() {
+        try (var executorService = Executors.newScheduledThreadPool(1)) {
+            executorService.schedule(() -> {
+                System.out.println("This is a schedules task running");
+            }, 2, TimeUnit.SECONDS);
+        }
+        finally {
+            System.out.println("Done using the Executor Service");
+        }
+    }
+
+    private static void runFixedRateScheduledTaskExecutor() {
     }
 }
