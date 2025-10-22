@@ -1,10 +1,12 @@
 package com.kapil.concurrency;
 
+import java.time.Duration;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class ExecutorServiceSample {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // creating a simple Executor Service
 
         System.out.println("I'm the main thread");
@@ -19,7 +21,8 @@ public class ExecutorServiceSample {
         // run scheduled thread executor, this will execute after 2 seconds
         runOnceScheduledThreadExecutor();
 
-        // run a task that ius executed at regular intervals
+        // run a task that ius executed at regular intervals,
+        // it starts after a delay of 0 second and then executes after every 1 seconds
         runFixedRateScheduledTaskExecutor();
     }
 
@@ -63,7 +66,7 @@ public class ExecutorServiceSample {
     private static void runOnceScheduledThreadExecutor() {
         try (var executorService = Executors.newScheduledThreadPool(1)) {
             executorService.schedule(() -> {
-                System.out.println("This is a schedules task running");
+                System.out.println("This is a run once scheduled task running");
             }, 2, TimeUnit.SECONDS);
         }
         finally {
@@ -71,6 +74,17 @@ public class ExecutorServiceSample {
         }
     }
 
-    private static void runFixedRateScheduledTaskExecutor() {
+    private static void runFixedRateScheduledTaskExecutor() throws InterruptedException {
+        try (ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1)) {
+            executorService.scheduleAtFixedRate(() -> {
+                System.out.println("This is a fixed rate scheduled task running");
+                //System.out.println("isDaemon : " + Thread.currentThread().isDaemon());
+            }, 0, 1, TimeUnit.SECONDS);
+            // sleep the calling thread for 3 seconds
+            Thread.sleep(Duration.ofSeconds(3));
+        }
+        finally {
+            System.out.println("Done using the Executor Service of runFixedRateScheduledTaskExecutor");
+        }
     }
 }
