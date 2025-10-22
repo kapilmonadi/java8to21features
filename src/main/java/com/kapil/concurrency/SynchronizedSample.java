@@ -9,7 +9,7 @@ public class SynchronizedSample {
         System.out.println("Name is " + name);
         name = "Main";
         System.out.println("Name after assignment in main thread is " + name);
-        System.out.println("Calling threads that will modify the name");
+        System.out.println("Creating and calling threads that will modify the name");
         modifyName();
     }
 
