@@ -18,12 +18,17 @@ public class ExecutorServiceSample {
         // run multiple threads executor
         runMultipleThreadExecutor();
 
-        // run scheduled thread executor, this will execute after 2 seconds
+        // run scheduled thread executor, this will execute a scheduled task after 2 seconds
         runOnceScheduledThreadExecutor();
 
         // run a task that ius executed at regular intervals,
         // it starts after a delay of 0 second and then executes after every 1 seconds
+        // This will still run
         runFixedRateScheduledTaskExecutor();
+
+        // Even though this scheduler is supposed to be running every 1 second but since the task itself
+        // takes 2 seconds to complete, the next run does not happen until the previously running task is completed
+        runFixedDelayScheduledTaskExecutor();
     }
 
     private static void runSingleThreadExecutor() {
@@ -75,7 +80,7 @@ public class ExecutorServiceSample {
     }
 
     private static void runFixedRateScheduledTaskExecutor() throws InterruptedException {
-        try (ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1)) {
+        try (ScheduledExecutorService executorService = Executors.newScheduledThreadPool(5)) {
             executorService.scheduleAtFixedRate(() -> {
                 System.out.println("This is a fixed rate scheduled task running");
                 //System.out.println("isDaemon : " + Thread.currentThread().isDaemon());
@@ -85,6 +90,24 @@ public class ExecutorServiceSample {
         }
         finally {
             System.out.println("Done using the Executor Service of runFixedRateScheduledTaskExecutor");
+        }
+    }
+
+    private static void runFixedDelayScheduledTaskExecutor() throws InterruptedException {
+        try (ScheduledExecutorService executorService = Executors.newScheduledThreadPool(5)) {
+            executorService.scheduleWithFixedDelay(() -> {
+                System.out.println("This is a fixed delay scheduled task running");
+                try {
+                    Thread.sleep(Duration.ofSeconds(2));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }, 0, 1, TimeUnit.SECONDS);
+            // sleep the calling thread for 4 seconds
+            Thread.sleep(Duration.ofSeconds(4));
+        }
+        finally {
+            System.out.println("Done using the Executor Service of runFixedDelayScheduledTaskExecutor");
         }
     }
 }
