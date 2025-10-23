@@ -20,10 +20,12 @@ public class SynchronizedSample {
         var platformThread1 = Thread.ofPlatform().name(thread1Str).start(() -> {
             System.out.println("I will modify the name to Thread 1");
             updateName(thread1Str);
+            updateNameSyncBlock(thread1Str);
         });
         var platformThread2 = Thread.ofPlatform().name(thread2Str).start(() -> {
             System.out.println("I will modify the name to Thread 2");
             updateName(thread2Str);
+            updateNameSyncBlock(thread2Str);
         });
     }
 
@@ -31,4 +33,12 @@ public class SynchronizedSample {
         name = newName;
         System.out.println("The new updated name is " + name + " and it was updated by " + Thread.currentThread().getName());
     }
+
+    private static void updateNameSyncBlock(String newName) {
+        synchronized (SynchronizedSample.class){
+            name = newName;
+            System.out.println("The new updated name is " + name + " and it was updated by " + Thread.currentThread().getName());
+        }
+    }
+
 }
