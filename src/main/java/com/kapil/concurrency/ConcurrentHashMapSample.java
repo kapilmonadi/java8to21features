@@ -3,7 +3,6 @@ package com.kapil.concurrency;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class ConcurrentHashMapSample {
     public static void main(String[] args) {
@@ -32,7 +31,7 @@ public class ConcurrentHashMapSample {
         Thread.ofPlatform().name("Thread2").start(() -> {
             try {
                 Thread.sleep(50); // Give thread 1 a head start
-                usersMap.put("X987", "Tom"); // Modifying the map during iteration
+                usersMap.put("X987", "Tom"); // ConcurrentHashMap allows the modification of a map while it is being iterated by another thread
                 System.out.println("Thread 2 added entry {X987 = Tom}");
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
