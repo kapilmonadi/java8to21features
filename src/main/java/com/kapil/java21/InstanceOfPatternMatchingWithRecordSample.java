@@ -13,19 +13,18 @@ public class InstanceOfPatternMatchingWithRecordSample {
         printEmployeeDetailsWithPatternMatchingAndRecords(employee2);
     }
 
-    private static void printPermanentEmployeeDetailsWithPatternMatching(Employee employee){
-        if(employee instanceof PermanentEmployee permanentEmployee) {
+    private static void printPermanentEmployeeDetailsWithPatternMatching(Employee employee) {
+        if (employee instanceof PermanentEmployee permanentEmployee) {
             System.out.println(permanentEmployee.getDescription());
-            System.out.println("grade is : " +permanentEmployee.grade);
-            System.out.println("designation is : " +permanentEmployee.designation);
-        }
-        else if (employee instanceof ContractualEmployee contractualEmployee) {
+            System.out.println("grade is : " + permanentEmployee.grade);
+            System.out.println("designation is : " + permanentEmployee.designation);
+        } else if (employee instanceof ContractualEmployee contractualEmployee) {
             System.out.println(employee.getDescription());
         }
     }
 
-    private static void printEmployeeDetailsWithPatternMatchingAndRecords(Employee employee){
-        if(employee instanceof PermanentEmployee(String grade, String designation)) {
+    private static void printEmployeeDetailsWithPatternMatchingAndRecords(Employee employee) {
+        if (employee instanceof PermanentEmployee(String grade, String designation)) {
             System.out.println(employee.getDescription());
             System.out.println("grade is : " + grade);
             System.out.println("designation is : " + designation);
