@@ -4,13 +4,13 @@ public class InstanceOfPatternMatchingWithRecordSample {
 
     public static void main(String[] args) {
 
-        Employee employee1 = new PermanentEmployee("F1", "VP");
-        Employee employee2 = new ContractualEmployee();
-        printPermanentEmployeeDetailsWithPatternMatching(employee1);
-        printPermanentEmployeeDetailsWithPatternMatching(employee2);
+        Employee permanentEmployee = new PermanentEmployee("F1", "VP");
+        Employee contractualEmployee = new ContractualEmployee();
+        printPermanentEmployeeDetailsWithPatternMatching(permanentEmployee);
+        printPermanentEmployeeDetailsWithPatternMatching(contractualEmployee);
 
-        printEmployeeDetailsWithPatternMatchingAndRecords(employee1);
-        printEmployeeDetailsWithPatternMatchingAndRecords(employee2);
+        printEmployeeDetailsWithPatternMatchingAndRecords(permanentEmployee);
+        printEmployeeDetailsWithPatternMatchingAndRecords(contractualEmployee);
     }
 
     private static void printPermanentEmployeeDetailsWithPatternMatching(Employee employee) {
