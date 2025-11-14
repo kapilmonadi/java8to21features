@@ -3,6 +3,7 @@ package com.kapil.java8;
 import com.kapil.records.Employee;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class StreamsSample {
     public static void main(String[] args) {
@@ -11,6 +12,7 @@ public class StreamsSample {
 
         printEmployeeWithoutStream(employeeList);
         printEmployeeWithStream(employeeList);
+        generateIntStream(6);
     }
 
     private static void printEmployeeWithStream(List<Employee> employeeList) {
@@ -19,9 +21,14 @@ public class StreamsSample {
 
     private static void printEmployeeWithoutStream(List<Employee> employees){
         // print using enhanced for loop
-
         for(Employee employee : employees){
             System.out.println(employee);
         }
     }
+
+    private static void generateIntStream(int limit){
+        IntStream intStream = IntStream.range(1, limit);
+        intStream.forEach(System.out::println);
+    }
+
 }
