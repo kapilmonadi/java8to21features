@@ -58,11 +58,10 @@ public class SwitchExamples {
     }
 
     public static String getMessageWithSwitchExpressionEnum(DayOfWeek dayOfWeek) {
-        String message = switch (dayOfWeek) {
+        return switch (dayOfWeek) {
             case MONDAY, TUESDAY, WEDNESDAY -> "Work from Office";
             case THURSDAY, FRIDAY -> "Work from Home";
             case SATURDAY, SUNDAY -> "Go outing";
         };
-        return message;
     }
 }
