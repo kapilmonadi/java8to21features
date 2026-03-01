@@ -8,7 +8,7 @@ public class VolatileSample {
 
     public static void main(String[] args) throws InterruptedException {
         runThread1();
-        // Sleep main thread for few so it gets blocked
+        // Sleep main thread for few seconds so it gets blocked
         Thread.sleep(Duration.ofSeconds(5));
         runThread2();
         System.out.println("Main completed !!");
