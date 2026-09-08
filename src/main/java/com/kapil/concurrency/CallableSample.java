@@ -5,7 +5,7 @@ import java.util.concurrent.*;
 
 public class CallableSample {
 
-    private static Callable<Employee> callable = CallableSample::getEmployee;
+    private static final Callable<Employee> callable = CallableSample::getEmployee;
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 

@@ -12,5 +12,6 @@ public class RecordSample {
         Employee employee2 = new Employee(2L, "Amit" , "S");
         System.out.println("Emp1 " + employee1);
         System.out.println("Emp2 "  + employee2);
+        System.out.println(employee1.id());
     }
 }
