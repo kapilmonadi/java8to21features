@@ -20,9 +20,9 @@ public class CountDownLatchSample {
 
         // Blocking operation
         // wait for all the threads to finish
-        //countDownLatch.await();
-        boolean await = countDownLatch.await(5, TimeUnit.SECONDS);
-        System.out.println("await " + await + " " + countDownLatch.getCount());
+        countDownLatch.await();
+        /*boolean await = countDownLatch.await(5, TimeUnit.SECONDS);
+        System.out.println("await " + await + " " + countDownLatch.getCount());*/
         System.out.println("All threads completed");
     }
 
@@ -32,11 +32,14 @@ public class CountDownLatchSample {
             public void run() {
                 System.out.println("I'm thread " + Thread.currentThread().getName() + " and counter value is: " + counter);
                 try {
-                    if (counter == 3) {
+
+                    Thread.sleep(Duration.ofSeconds(2));
+
+                    /*if (counter == 3) {
                         Thread.sleep(Duration.ofSeconds(10));
                     } else {
                         Thread.sleep(Duration.ofSeconds(2));
-                    }
+                    }*/
                     countDownLatch.countDown();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
