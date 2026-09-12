@@ -14,33 +14,32 @@ public class CountDownLatchSample {
 
         IntStream.range(1, threadCount +1).forEach(value -> {
             Thread.Builder threadBuilder = Thread.ofPlatform().name("Platform Thread - " + value);
-            System.out.println("Starting thread counter is :" + value);
-            threadBuilder.start(new MyRunnable(countDownLatch));
+            threadBuilder.start(new MyRunnable(countDownLatch, value));
         });
 
         // Blocking operation
         // wait for all the threads to finish
         countDownLatch.await();
+        /*boolean await = countDownLatch.await(5, TimeUnit.SECONDS);
+        System.out.println("await " + await + " " + countDownLatch.getCount());*/
         System.out.println("All threads completed");
     }
 
-    private static class MyRunnable implements Runnable {
-
-        private final CountDownLatch countDownLatch;
-
-        private MyRunnable(CountDownLatch countDownLatch) {
-            this.countDownLatch = countDownLatch;
-        }
+    private record MyRunnable(CountDownLatch countDownLatch, Integer counter) implements Runnable {
 
         @Override
-        public void run() {
-            System.out.println("I'm thread " + Thread.currentThread().getName());
-            try {
-                Thread.sleep(Duration.ofSeconds(2));
-                countDownLatch.countDown();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            public void run() {
+                System.out.println("I'm thread " + Thread.currentThread().getName() + " and counter value is: " + counter);
+                try {
+                    if (counter == 3) {
+                        Thread.sleep(Duration.ofSeconds(10));
+                    } else {
+                        Thread.sleep(Duration.ofSeconds(2));
+                    }
+                    countDownLatch.countDown();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
-    }
 }
