@@ -2,6 +2,7 @@ package com.kta.concurrency;
 
 import java.time.Duration;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
@@ -19,9 +20,9 @@ public class CountDownLatchSample {
 
         // Blocking operation
         // wait for all the threads to finish
-        countDownLatch.await();
-        /*boolean await = countDownLatch.await(5, TimeUnit.SECONDS);
-        System.out.println("await " + await + " " + countDownLatch.getCount());*/
+        //countDownLatch.await();
+        boolean await = countDownLatch.await(5, TimeUnit.SECONDS);
+        System.out.println("await " + await + " " + countDownLatch.getCount());
         System.out.println("All threads completed");
     }
 
