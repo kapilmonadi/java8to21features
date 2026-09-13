@@ -13,32 +13,25 @@ public class CyclicBarrierSample {
 
         IntStream.range(1, threadCount +1).forEach(value -> {
             Thread.Builder threadBuilder = Thread.ofPlatform().name("Platform Thread - " + value);
-            System.out.println("Starting thread counter is :" + value);
-            threadBuilder.start(new MyRunnable(cyclicBarrier));
+            threadBuilder.start(new MyRunnable(cyclicBarrier, value));
         });
-
-
     }
 
-    private static class MyRunnable implements Runnable {
-
-        private final CyclicBarrier cyclicBarrier;
-        public MyRunnable(CyclicBarrier cyclicBarrier) {
-            this.cyclicBarrier = cyclicBarrier;
-        }
-
+    private record MyRunnable(CyclicBarrier cyclicBarrier, Integer counter) implements Runnable {
         @Override
         public void run() {
-            System.out.println("I'm thread " + Thread.currentThread().getName());
+            System.out.println("I'm thread " + Thread.currentThread().getName() + " and counter value is: " + counter);
             try {
-                Thread.sleep(Duration.ofSeconds(2));
-                // the thread is done with its work, call await to block till other threads finish their work
-                try {
-                    cyclicBarrier.await();
-                } catch (BrokenBarrierException e) {
-                    throw new RuntimeException(e);
+                // the thread processing counter = 3 will take the longest of 10 secs
+                if (counter == 3) {
+                    Thread.sleep(Duration.ofSeconds(10));
+                } else {
+                    Thread.sleep(Duration.ofSeconds(2));
                 }
-            } catch (InterruptedException e) {
+                // the thread is done with its work, call await to block till other threads finish their work
+                cyclicBarrier.await();
+                System.out.println("Exiting the task, thread name: " + Thread.currentThread().getName() + " and counter value is: " + counter);
+            } catch (InterruptedException | BrokenBarrierException e) {
                 throw new RuntimeException(e);
             }
         }
