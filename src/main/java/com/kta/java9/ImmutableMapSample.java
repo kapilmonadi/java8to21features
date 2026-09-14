@@ -27,6 +27,7 @@ public class ImmutableMapSample {
 
         // we want to create an immutable static cache of map of employees
         //employeeMapOption01.put(4L, new Employee(3L, "Naresh" , "Kumar"));
+        //employeeMapOption02.put(4L, new Employee(4L, "Naresh" , "Kumar"));
         System.out.println("employeeMapOption01 is " + employeeMapOption01);
         System.out.println("employeeMapOption02 is " + employeeMapOption02);
 
@@ -38,7 +39,7 @@ public class ImmutableMapSample {
         System.out.println("employeeMapOption04 is " + employeeMapOption04);
 
         //employeeMapOption03.put(4L, new Employee(3L, "Naresh" , "Kumar"));
-        //employeeMapOption04.put(4L, new Employee(3L, "Naresh" , "Kumar"));
+        //employeeMapOption04.put(4L, new Employee(4L, "Naresh" , "Kumar"));
     }
 
     // fetch the list of unique employees

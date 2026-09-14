@@ -12,6 +12,28 @@ import java.util.stream.Collectors;
 public class TeeingSample {
     public static void main(String[] args) {
         // initialize the student objects
+        List<Student> studentList = getStudents();
+
+        // let's say we want to find the total marks and highest marks of each individual student.
+        // if we use plain vanilla Streams API, we would have to run 2 iteration by creating 2 streams.
+        // using Teeing we can do it at 1 go.
+        Map<String, String> studentMarksMap = new HashMap<>();
+        studentList.forEach(student -> {
+            student.getSubjects().stream().collect(
+                    Collectors.teeing(
+                            Collectors.summingInt(Subject::getMarks),
+                            Collectors.maxBy(Comparator.comparing(Subject::getMarks)),
+                            (collector1, collector2) -> {
+                                studentMarksMap.put(student.getFirstName() +   " " +student.getLastName(), "Total marks : " + collector1 + "( Highest : " + collector2.get().getMarks() + ")");
+                                return studentMarksMap;
+                            }
+                    )
+            );
+        });
+        System.out.println(studentMarksMap);
+    }
+
+    private static List<Student> getStudents() {
         Student student1 = new Student(1L, "Amar" , "Kumar");
         Student student2 = new Student(2L, "Ankit" , "Kumar");
         Student student3 = new Student(3L, "Manas" , "Kumar");
@@ -25,23 +47,6 @@ public class TeeingSample {
         student3.setSubjects(student3Subjects);
 
         List<Student> studentList = List.of(student1, student2, student3);
-
-        // let's say we want to find the total marks and highest marks of each individual student.
-        // if we use plain vanilla Streams API, we would have to run 2 iteration by creating 2 streams.
-        // using Teeing we can do it at 1 go.
-        Map<String, String> studentMarksMap = new HashMap<>();
-        studentList.stream().forEach(student -> {
-            student.getSubjects().stream().collect(
-                    Collectors.teeing(
-                            Collectors.summingInt(Subject::getMarks),
-                            Collectors.maxBy(Comparator.comparing(Subject::getMarks)),
-                            (collector1, collector2) -> {
-                                studentMarksMap.put(student.getFirstName() +   " " +student.getLastName(), "Total marks : " + collector1 + "( Highest : " + collector2.get().getMarks() + ")");
-                                return studentMarksMap;
-                            }
-                    )
-            );
-        });
-        System.out.println(studentMarksMap);
+        return studentList;
     }
 }

@@ -5,9 +5,9 @@ import java.util.List;
 public class NullPointerExample {
 
     static class Person {
-        private String name;
-        private int age;
-        private Address address;
+        private final String name;
+        private final int age;
+        private final Address address;
 
         public Person(String name, int age, Address address) {
             this.name = name;
@@ -17,8 +17,8 @@ public class NullPointerExample {
     }
 
     static class Address {
-        private String houseNumber;
-        private Locality locality;
+        private final String houseNumber;
+        private final Locality locality;
 
         public Address(String houseNumber, Locality locality) {
             this.houseNumber = houseNumber;
@@ -27,8 +27,8 @@ public class NullPointerExample {
     }
 
     static class Locality {
-        private String zipCode;
-        private String landMark;
+        private final String zipCode;
+        private final String landMark;
 
         public Locality(String zipCode, String landMark) {
             this.zipCode = zipCode;

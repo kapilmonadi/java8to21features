@@ -9,7 +9,8 @@ public class CyclicBarrierSample {
     public static void main(String[] args) {
         int threadCount = 5;
         // barrier action is called once await is called by all threads
-        CyclicBarrier cyclicBarrier = new CyclicBarrier(threadCount, () -> System.out.println("Barrier action called. All child threads completed"));
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(threadCount,
+                () -> System.out.println("Barrier action called. All child threads completed !"));
 
         IntStream.range(1, threadCount +1).forEach(value -> {
             Thread.Builder threadBuilder = Thread.ofPlatform().name("Platform Thread - " + value);
