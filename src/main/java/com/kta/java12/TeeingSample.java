@@ -12,28 +12,8 @@ public class TeeingSample {
     public static void main(String[] args) {
         // initialize the student objects
         List<Student> studentList = getStudentList();
-
-        // let's say we want to find the total marks and highest marks of each individual student.
-        // if we use plain vanilla Streams API, we would have to run 2 iteration by creating 2 streams.
-        // using Teeing we can do it at 1 go.
-        // Teeing becomes useful when you need multiple aggregations over the same stream
-        Map<String, StudentMarksSummary> studentMarksMap;
-
-        studentMarksMap = studentList.stream().collect(Collectors.toMap(student -> student.getFirstName() + " " + student.getLastName(),
-
-                student -> student.getSubjects().stream().collect(Collectors.teeing(
-
-                        // Collector 1: Calculate total marks
-                        Collectors.summingInt(Subject::getMarks),
-
-                        // Collector 2: Find highest marks
-                        Collectors.maxBy(Comparator.comparing(Subject::getMarks)),
-
-                        // Merger
-                        (totalMarks, highestSubject) -> new StudentMarksSummary(totalMarks, highestSubject.map(Subject::getMarks).orElse(0))))));
-
-        // Print results
-        studentMarksMap.forEach((studentName, summary) -> System.out.println(studentName + " -> Total Marks: " + summary.totalMarks() + ", Highest Marks: " + summary.highestMarks()));
+        withoutTeeing(studentList);
+        withTeeing(studentList);
     }
 
     private static List<Student> getStudentList() {
@@ -50,6 +30,42 @@ public class TeeingSample {
         student3.setSubjects(student3Subjects);
 
         return List.of(student1, student2, student3);
+    }
+
+    private static void withoutTeeing(List<Student> studentList){
+        System.out.println("Below output is without Teeing, using the stream twice !");
+        Map<String, Integer> studentMaximumMarks = studentList.stream().collect(Collectors.toMap(student -> student.getFirstName() + " " + student.getLastName(),
+                student -> student.getSubjects().stream().max(Comparator.comparing(Subject::getMarks)).map(Subject::getMarks).orElse(0)));
+
+        Map<String, Integer> studentTotalMarks = studentList.stream().collect(Collectors.toMap(student -> student.getFirstName() + " " + student.getLastName(),
+                student -> student.getSubjects().stream().mapToInt(Subject::getMarks).sum()));
+
+        System.out.println(studentMaximumMarks);
+        System.out.println(studentTotalMarks);
+    }
+
+    private static void withTeeing(List<Student> studentList){
+        // let's say we want to find the total marks and highest marks of each individual student.
+        // if we use plain vanilla Streams API, we would have to run 2 iteration by creating 2 streams.
+        // using Teeing we can do it at 1 go.
+        // Teeing becomes useful when you need multiple aggregations over the same stream
+        System.out.println("Below output is with Teeing, using the stream only once !");
+        Map<String, StudentMarksSummary> studentMarksMap;
+        studentMarksMap = studentList.stream().collect(Collectors.toMap(student -> student.getFirstName() + " " + student.getLastName(),
+
+                student -> student.getSubjects().stream().collect(Collectors.teeing(
+
+                        // Collector 1: Calculate total marks for each student
+                        Collectors.summingInt(Subject::getMarks),
+
+                        // Collector 2: Find the highest marks for each student
+                        Collectors.maxBy(Comparator.comparing(Subject::getMarks)),
+
+                        // Merger
+                        (totalMarks, highestSubject) -> new StudentMarksSummary(totalMarks, highestSubject.map(Subject::getMarks).orElse(0))))));
+
+        // Print results
+        studentMarksMap.forEach((studentName, summary) -> System.out.println(studentName + " -> Total Marks: " + summary.totalMarks() + ", Highest Marks: " + summary.highestMarks()));
     }
 
     record StudentMarksSummary(int totalMarks, int highestMarks) { }
