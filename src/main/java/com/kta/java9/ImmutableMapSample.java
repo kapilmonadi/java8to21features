@@ -26,8 +26,14 @@ public class ImmutableMapSample {
         Map<Long, Employee> employeeMapOption04  = getImmutableMapOption4();
 
         // we want to create an immutable static cache of map of employees
-        //employeeMapOption01.put(4L, new Employee(3L, "Naresh" , "Kumar"));
-        //employeeMapOption02.put(4L, new Employee(4L, "Naresh" , "Kumar"));
+        try{
+            employeeMapOption01.put(4L, new Employee(3L, "Naresh" , "Kumar"));
+            employeeMapOption02.put(4L, new Employee(4L, "Naresh" , "Kumar"));
+        }
+        catch(UnsupportedOperationException unsupportedOperationException)  {
+            System.out.println("Employee Map is immutable" + unsupportedOperationException.getMessage());
+        }
+
         System.out.println("employeeMapOption01 is " + employeeMapOption01);
         System.out.println("employeeMapOption02 is " + employeeMapOption02);
 
@@ -38,8 +44,13 @@ public class ImmutableMapSample {
         System.out.println("employeeMapOption03 is " + employeeMapOption03);
         System.out.println("employeeMapOption04 is " + employeeMapOption04);
 
-        //employeeMapOption03.put(4L, new Employee(3L, "Naresh" , "Kumar"));
-        //employeeMapOption04.put(4L, new Employee(4L, "Naresh" , "Kumar"));
+        try{
+            employeeMapOption03.put(3L, new Employee(3L, "Naresh" , "Kumar"));
+            employeeMapOption04.put(4L, new Employee(4L, "Naresh" , "Kumar"));
+        }
+        catch(UnsupportedOperationException unsupportedOperationException)  {
+            System.out.println("Employee Map is immutable" + unsupportedOperationException.getMessage());
+        }
     }
 
     // fetch the list of unique employees
@@ -68,7 +79,7 @@ public class ImmutableMapSample {
 
     // Option 04 using Map.ofEntries (since java 9)
     private static Map<Long, Employee> getImmutableMapOption4() {
-        return Map.ofEntries(Map.entry(9l, new Employee(9L, "Jeet" , "Kumar")),
-                Map.entry(10l, new Employee(10L, "Rajesh" , "Kumar")));
+        return Map.ofEntries(Map.entry(9L, new Employee(9L, "Jeet" , "Kumar")),
+                Map.entry(10L, new Employee(10L, "Rajesh" , "Kumar")));
     }
 }
