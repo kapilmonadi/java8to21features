@@ -6,8 +6,12 @@ import java.time.DayOfWeek;
  */
 public class SwitchExamples {
 
+    private static final String DAY_OF_THE_WEEK = "SUNDAY";
+
     public static void main(String[] args) {
-        System.out.println(getMessageWithSwitchExpression("SUNDAY"));
+        System.out.println(getMessage(DAY_OF_THE_WEEK));
+        System.out.println(getMessageWithSwitch(DAY_OF_THE_WEEK));
+        System.out.println(getMessageWithSwitchExpression(DAY_OF_THE_WEEK));
     }
 
     public static String getMessage(String dayOfWeek) {
@@ -45,14 +49,18 @@ public class SwitchExamples {
         return message;
     }
 
+    /**
+     *  Switch Expressions
+     */
     public static String getMessageWithSwitchExpression(String dayOfWeek) {
         return switch (dayOfWeek) {
             case "MONDAY", "TUESDAY", "WEDNESDAY" -> "Work from Office";
             case "THURSDAY", "FRIDAY" -> "Work from Home";
-            default -> {
+            default ->  "Go outing";
+            /*default -> {
                 System.out.println("Hey its weekend. Time to go outing !!");
                 yield "Go outing";
-            }
+            }*/
         };
     }
 

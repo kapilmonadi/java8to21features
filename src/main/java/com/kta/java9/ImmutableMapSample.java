@@ -20,10 +20,17 @@ public class ImmutableMapSample {
         employeeMap.put(3L, new Employee(3L, "Raj" , "Kumar"));
         System.out.println("Employee Map after modification is " + employeeMap);
 
+        // java 5
         Map<Long, Employee> employeeMapOption01  = getImmutableMapOption1(employeeMap);
-        Map<Long, Employee> employeeMapOption02  = getImmutableMapOption2(employeeMap);
+
+        // java 9
         Map<Long, Employee> employeeMapOption03  = getImmutableMapOption3();
+
+        // java 9
         Map<Long, Employee> employeeMapOption04  = getImmutableMapOption4();
+
+        // java 10
+        Map<Long, Employee> employeeMapOption02  = getImmutableMapOption2(employeeMap);
 
         // we want to create an immutable static cache of map of employees
         try{
@@ -31,7 +38,7 @@ public class ImmutableMapSample {
             employeeMapOption02.put(4L, new Employee(4L, "Naresh" , "Kumar"));
         }
         catch(UnsupportedOperationException unsupportedOperationException)  {
-            System.out.println("Employee Map is immutable" + unsupportedOperationException.getMessage());
+            System.out.println("Employee Map is immutable");
         }
 
         System.out.println("employeeMapOption01 is " + employeeMapOption01);
@@ -39,6 +46,7 @@ public class ImmutableMapSample {
 
         // we want to create an immutable static cache of map of employees
         employeeMap.put(5L, new Employee(5L, "Vikram" , "Kumar"));
+
         System.out.println("employeeMapOption01 is " + employeeMapOption01);
         System.out.println("employeeMapOption02 is " + employeeMapOption02);
         System.out.println("employeeMapOption03 is " + employeeMapOption03);
@@ -49,7 +57,7 @@ public class ImmutableMapSample {
             employeeMapOption04.put(4L, new Employee(4L, "Naresh" , "Kumar"));
         }
         catch(UnsupportedOperationException unsupportedOperationException)  {
-            System.out.println("Employee Map is immutable" + unsupportedOperationException.getMessage());
+            System.out.println("Employee Map is immutable");
         }
     }
 
