@@ -12,6 +12,7 @@ public class SwitchExamples {
         System.out.println(getMessage(DAY_OF_THE_WEEK));
         System.out.println(getMessageWithSwitch(DAY_OF_THE_WEEK));
         System.out.println(getMessageWithSwitchExpression(DAY_OF_THE_WEEK));
+        System.out.println(getMessageWithSwitchExpressionEnum(DayOfWeek.FRIDAY));
     }
 
     public static String getMessage(String dayOfWeek) {
@@ -56,11 +57,11 @@ public class SwitchExamples {
         return switch (dayOfWeek) {
             case "MONDAY", "TUESDAY", "WEDNESDAY" -> "Work from Office";
             case "THURSDAY", "FRIDAY" -> "Work from Home";
-            default ->  "Go outing";
-            /*default -> {
+            //default ->  "Go outing";
+            default -> {
                 System.out.println("Hey its weekend. Time to go outing !!");
                 yield "Go outing";
-            }*/
+            }
         };
     }
 
