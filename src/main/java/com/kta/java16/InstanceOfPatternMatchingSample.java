@@ -1,5 +1,9 @@
 package com.kta.java16;
 
+/**
+ * This class showcases examples of performing the instance of test without Pattern Matching
+ * and with Pattern Matching that was introduced in Java 16
+ */
 public class InstanceOfPatternMatchingSample {
     public static void main(String[] args) {
         String mySampleStr = "Hello Kaps !";
