@@ -1,9 +1,14 @@
 package com.kta.concurrency;
 
+import com.kta.annotations.AuditExecutionTime;
+
 import java.time.Duration;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 public class VirtualThreadSample {
+
+    @AuditExecutionTime("Main Thread Runner")
     public static void main(String[] args) throws InterruptedException {
         runPlatformThread();
         runVirtualThread();
@@ -11,6 +16,7 @@ public class VirtualThreadSample {
         Thread.sleep(Duration.ofSeconds(2));
     }
 
+    @AuditExecutionTime(value = "Platform Thread Execution", unit = TimeUnit.MILLISECONDS)
     private static void runPlatformThread() throws InterruptedException {
         var platformThread = Thread.ofPlatform().unstarted(() -> {
             System.out.println("I'm being executed by a Platform Thread");
@@ -28,6 +34,7 @@ public class VirtualThreadSample {
         Thread.sleep(Duration.ofMillis(500));
     }
 
+    @AuditExecutionTime(value = "Virtual Thread Execution", unit = TimeUnit.MILLISECONDS)
     private static void runVirtualThread() throws InterruptedException {
         var virtualThread = Thread.ofVirtual().unstarted(() -> {
             System.out.println("I'm being executed by a Virtual Thread");
@@ -45,6 +52,7 @@ public class VirtualThreadSample {
         Thread.sleep(Duration.ofMillis(500));
     }
 
+    @AuditExecutionTime(value = "Virtual Thread Factory Execution", unit = TimeUnit.MILLISECONDS)
     private static void runVirtualThreadUsingFactory() throws InterruptedException {
         ThreadFactory threadFactory = Thread.ofVirtual().factory();
         threadFactory.newThread(() -> {
