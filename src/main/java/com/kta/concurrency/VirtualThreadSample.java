@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 public class VirtualThreadSample {
 
-    @AuditExecutionTime("Main Thread Runner")
+    //@AuditExecutionTime("Main Thread Runner")
     public static void main(String[] args) throws InterruptedException {
         runPlatformThread();
         runVirtualThread();
@@ -34,7 +34,7 @@ public class VirtualThreadSample {
         Thread.sleep(Duration.ofMillis(500));
     }
 
-    @AuditExecutionTime(value = "Virtual Thread Execution", unit = TimeUnit.MILLISECONDS)
+    //@AuditExecutionTime(value = "Virtual Thread Execution", unit = TimeUnit.MILLISECONDS)
     private static void runVirtualThread() throws InterruptedException {
         var virtualThread = Thread.ofVirtual().unstarted(() -> {
             System.out.println("I'm being executed by a Virtual Thread");
