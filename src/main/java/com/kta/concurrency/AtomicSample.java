@@ -8,21 +8,6 @@ public class AtomicSample {
     private final AtomicInteger count = new AtomicInteger(1);
     private int nonThreadSafeCount = 1;
 
-    // increment and return the latest value
-    private void increment(){
-        count.incrementAndGet();
-        nonThreadSafeCount++;
-        //System.out.println("Executed by thread: " + Thread.currentThread().getName());
-    }
-
-    private AtomicInteger getCount() {
-        return this.count;
-    }
-
-    private int getNonThreadSafeCount() {
-        return this.nonThreadSafeCount;
-    }
-
     public static void main(String[] args) {
         AtomicSample atomicSample = new AtomicSample();
         int totalCores = Runtime.getRuntime().availableProcessors();
@@ -37,5 +22,20 @@ public class AtomicSample {
         }
         System.out.println(" The value of thread safe count is : " + atomicSample.getCount());
         System.out.println(" The value fo non-thread safe count is " + atomicSample.getNonThreadSafeCount());
+    }
+
+    // increment and return the latest value
+    private void increment(){
+        count.incrementAndGet();
+        nonThreadSafeCount++;  // 1. Read  2.Increment  3.Write
+        //System.out.println("Executed by thread: " + Thread.currentThread().getName());
+    }
+
+    private AtomicInteger getCount() {
+        return this.count;
+    }
+
+    private int getNonThreadSafeCount() {
+        return this.nonThreadSafeCount;
     }
 }
